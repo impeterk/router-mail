@@ -9,6 +9,7 @@ export default defineConfig({
       projects: ["./tsconfig.json"],
     }),
   ],
+  assetsInclude: ["**/*.md"],
   build: {
     cssMinify: true,
     ssr: false,

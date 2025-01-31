@@ -66,6 +66,16 @@
   }
 }
 
+
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+
+}
+
+
+
 @layer base {
   * {
     @apply border-border;
@@ -78,22 +88,47 @@
 
 
 @layer base {
-  html {
-    color-scheme: light dark;
-  }
+  .prose {
+    @apply text-pretty text-justify;
 
-  .using-mouse * {
-    outline: none !important;
-  }
-}
+    h1 {
+      @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl
+    }
 
+    h2 {
+      @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0
+    }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+    h3 {
+      @apply scroll-m-20 text-2xl font-semibold tracking-tight mt-[2.25em]
+    }
 
-  body {
-    @apply bg-background text-foreground;
+    h4 {
+      @apply scroll-m-20 text-xl font-semibold tracking-tight
+    }
+
+    p {
+      @apply leading-7 [&:not(:first-child)]:mt-4
+    }
+
+    blockquote {
+      @apply mt-6 border-l-2 pl-6 italic bg-muted text-muted-foreground py-2
+    }
+
+    ul {
+      @apply my-6 ml-6 list-disc [&>li]:mt-2
+    }
+
+    ol {
+      @apply my-6 ml-6 list-decimal [&>li]:mt-2
+    }
+
+    code, pre {
+      @apply relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold mt-2
+    }
+
+    a {
+      @apply text-accent-foreground underline underline-offset-4 font-semibold italic
+    }
   }
 }

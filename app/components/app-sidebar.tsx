@@ -1,70 +1,67 @@
-"use client";
-
 import * as React from "react";
-import { Frame, Map, PieChart } from "lucide-react";
 
-import { NavProjects } from "@/components/nav-projects";
+import { NavTemplates } from "@/components/nav-templates";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
+  SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router";
-import { Separator } from "@radix-ui/react-separator";
+import { NavFooter } from "./nav-footer";
+import type { Node } from "@/lib/types";
+import { Button } from "./ui/button";
+import ExportAllTemplates from "./export-all";
 
-// This is sample data.
-const data = {
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "/something",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "/else",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "/templates",
-      icon: Map,
-    },
-  ],
-};
-
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  nodes,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { nodes: Node }) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <Link to="/">
-              <SidebarMenuButton
-                size="lg"
-                className="hover:bg-inherit flex justify-center"
-              >
-                <div className="flex aspect-square size-12 items-center justify-center rounded-lg  text-sidebar-primary-foreground">
-                  <img src="/favicon.ico" className="size-full" />
-                </div>
-                <div className="grid text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Emails</span>
-                  <span className="truncate text-xs">are hard</span>
-                </div>
-              </SidebarMenuButton>
-            </Link>
+            <SidebarLogo />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <Separator className="border-1 border mx-4" />
+      <SidebarSeparator />
       <SidebarContent>
-        <NavProjects projects={data.projects} />
+        <SidebarGroupContent>
+          <NavTemplates templates={nodes} />
+        </SidebarGroupContent>
       </SidebarContent>
+      <SidebarFooter>
+        <ExportAllTemplates />
+        <NavFooter />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
+  );
+}
+
+function SidebarLogo() {
+  return (
+    <Link to="/">
+      <SidebarMenuButton
+        size="lg"
+        className="hover:bg-inherit flex justify-center"
+      >
+        <div className="flex aspect-square size-12 items-center justify-center rounded-lg  text-sidebar-primary-foreground">
+          <img src="/favicon.ico" className="size-full" />
+        </div>
+        <div className="grid text-left text-sm leading-tight">
+          <span className="truncate font-semibold">Emails</span>
+          <span className="truncate text-xs">are hard</span>
+        </div>
+      </SidebarMenuButton>
+    </Link>
   );
 }
