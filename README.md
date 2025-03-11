@@ -1,100 +1,134 @@
-# Welcome to React Router!
+# React mjml Starter
 
-A modern, production-ready template for building full-stack React applications using React Router.
+## Work in progress 🏎️
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+To get strated run
 
-## Features
-
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-
-## Getting Started
-
-### Installation
-
-Install the dependencies:
-
-```bash
+```sh
 npm install
 ```
 
-### Development
+After successful install run
 
-Start the development server with HMR:
-
-```bash
+```sh
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Project starts and is available on port `localhost:3000`
 
-## Building for Production
+## Getting started
 
-Create a production build:
+> It's gonna be 🔥
 
-```bash
-npm run build
+The main driving force behind this effort was the and still is the terrible situation around writing email templates.
+This "framework" combines amazing technologies to make our lives easier.
+
+We are using [⚛️React Router v.7🖲️]('https://reactrouter.com') for the back-end and [📧 MJML](https://mjml.io) for the Frontend.
+
+### MJML? What is that
+
+MJML is a proven piece of technology for creating email templates. For the editor, well we are basically writing `html` with **mj-** prefix.
+The best part is, that team behind mjml made sure, that all components look good on all email clients and even provided [compatibility section](https://mjml.io/compatibility/mj-button).
+
+> standart `<mj-button>` component, does not support border radius for MSO, so buttons are always rectanges. Therefore we will use custom component [**`<mj-msobutton>`**](https://documentation.mjml.io/#mjml-msobutton) that provides border radius out of the box.
+
+Altough mjml is great, it does not really fit our purpose. It's not really a templating language, therefore we can not create loops, add variable from config file and importing components is sort of working
+
+### JSX to the rescue
+
+So it looks like we benefit from some sort of templating language. There are solutions out there like [mjml-handlebars](https://marketplace.visualstudio.com/items?itemName=rbremont.vscode-handlebars-mjml), but nobody want to get through that set up. Luckily for us, there is a great templating language developed by back then Facebook called [JSX](https://react.dev/learn/writing-markup-with-jsx). JSX is also used by React and Preact and Solid and Qwik and also Astro templating language is build on JSX.
+
+Anyways, it's quite simple to use, we just have to follow a few [simple rules](#jsx-rules) and it enables us to use `mjml` syntax with syntax higlighting and advanced templating features as well.
+
+### Why do we need back-end ?
+
+So as you can see, creating email templates is hard. Just to make sure that templates look good an majority of clients is a hustle, but to create them in bulk, e.g. for localization. We are up for a truble.
+
+So we figured out, what technology to use for writing templates (mjml) combined it with powerful temlating language (jsx), so we can write reusable components, implement variables from config files, etc.
+
+But there is a one problem, we are still not getting the final `.html` files that can be used by email clients.
+
+### Lift off! 🚀
+
+Up till this point, everything would be only rendered (displayed) as JSX component, which under the hood is not a valid HTML. That's why we have reached for React router as a server side framework. Which enables us, to transform ours JSX templates into valid `.html` files and writes them to the disc as well as sending emails for testing.
+
+> It enables so much more, but not many features were implemented yet 😔
+
+We are also planning additional features
+
+- [ ] bulk export
+- [ ] compression
+- [ ] sending multiple templates
+
+## Basics
+
+This 'framework' provides posibility to create templates with three different approaches.
+
+1. mjml-in-jsx
+2. mjml-in-vue
+
+
+### 1. mjml-in-jsx
+
+This is **our** approach of combining best of both worlds implemented from scratch. This approach enables you, to use `JSX Components` and craete templates using `mjml` syntax and mjml components inside JSX components.
+
+## 🚀 ✉️ Project Structure
+
+Inside this project you can find the following structure:
+
+```text
+/
+├── public/
+│   └── favicon.svg
+├── emails/
+│   ├── jsx/
+│   ├── vue/
+│   └── react/
+├── src/
+│   └── routes/
+│       └── home.tsx
+│       └── email/
+│           └── page.tsx
+├── templates/
+│    └── [jsx,vue]/
+│    └── _components/
+└── package.json
 ```
 
-## Deployment
+> Structure can change
 
-### Docker Deployment
+Based on your approach you should create templates in these folders
 
-This template includes three Dockerfiles optimized for different package managers:
+- js(x): `templates/jsx`
+- Vue: `templates/vue`
 
-- `Dockerfile` - for npm
-- `Dockerfile.pnpm` - for pnpm
-- `Dockerfile.bun` - for bun
+You can add partials / components where ever you like. However, please make sure, that the folder/file is prefixed with **\_** e.g. `src/templates/[js(x)|vue]/_components`, this foler will be ignored for final build.
 
-To build and run using Docker:
+> this works with single files as well. e.g. `src/templates/*/_head.[jsx|vue]`
 
-```bash
-# For npm
-docker build -t my-app .
+Final templates are exported into following structure by default
+`email/[mjml | js | react]`
 
-# For pnpm
-docker build -f Dockerfile.pnpm -t my-app .
+> ❗ You can change any of these values in the `app.config.json` file in the root of the project
 
-# For bun
-docker build -f Dockerfile.bun -t my-app .
+## 📨 Sending emails
 
-# Run the container
-docker run -p 3000:3000 my-app
+You can test each template by sending to any email address. However, you have to provide your own smtp credentials.
+I would recommend [Brevo](https://www.brevo.com/), but you can use any service you like.
+
+copy `.env.example` to `.env`
+
+```sh
+cp .env.example .env
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+and fulfill necessary values with your own
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+## 🧞 Commands
 
-### DIY Deployment
+All commands are run from the root of the project, from a terminal:
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+| Command       | Action                                      |
+| :------------ | :------------------------------------------ |
+| `npm install` | Installs dependencies                       |
+| `npm run dev` | Starts local dev server at `localhost:3000` |
