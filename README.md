@@ -1,6 +1,6 @@
 # React mjml Starter
 
-## Work in progress 🏎️
+## In Development 🏎️
 
 To get strated run
 
