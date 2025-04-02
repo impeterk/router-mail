@@ -17,6 +17,9 @@ export const title = "Your order is on its way";
 const preview =
   "Your Henkel Adhesives items are on the way. You can track your items by using the link below.";
 
+// export config as well
+export { config };
+
 // template is default export
 export default function OrderShipped() {
   return (
@@ -39,7 +42,7 @@ export default function OrderShipped() {
                 color={config.stage.btn.color}
                 href="{{link}}"
               >
-                Track Your Order
+                {config["en_US"].buttons.stage}
               </Button>
             </>
           </Stage>

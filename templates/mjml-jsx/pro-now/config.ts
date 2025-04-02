@@ -46,4 +46,9 @@ export default {
       size: "24px",
     },
   },
+  i18n: true,
+  locales: ["en_US", "en_GB", "it_IT"],
+  en_US: {
+    buttons: { stage: "Track Your Order" },
+  },
 };

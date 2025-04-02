@@ -16,8 +16,16 @@ export function loadAllTemplates() {
   return templatesTree;
 }
 
-export async function loadTemplate(path: string, ext = "jsx"): Promise<string> {
-  const raw = await import(/*@vite-ignore*/ `/${path}.${ext}`);
-  if (ext === "jsx") return renderJsxTemplate(raw?.default());
-  return "";
+export async function loadTemplate(path: string, ext = "jsx", locale = "") {
+  const file = await import(/*@vite-ignore*/ `/${path}.${ext}`);
+  const { config } = file;
+  let locales: string[] = config?.locales ?? [];
+  if (config?.locales?.length && !locale) {
+    locale = config.locales[0];
+  }
+  let template = "";
+  if (ext === "jsx") {
+    template = await renderJsxTemplate(file?.default(locale));
+  }
+  return { locales, config, template, activeLocale: locale };
 }
