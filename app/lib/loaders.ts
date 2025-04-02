@@ -19,10 +19,12 @@ export function loadAllTemplates() {
 export async function loadTemplate(path: string, ext = "jsx", locale = "") {
   const file = await import(/*@vite-ignore*/ `/${path}.${ext}`);
   const { config } = file;
-  let locales: string[] = Object.keys(config?.locales) ?? [];
-  if (config?.locales?.length && !locale) {
-    locale = config.locales[0];
+  let locales: string[] = Object.keys(config?.locales ?? []);
+  console.log({ fn: locales });
+  if (locales.length && !locale) {
+    locale = locales[0];
   }
+  console.log({ locale });
   let template = "";
   if (ext === "jsx") {
     template = await renderJsxTemplate(file?.default(locale));

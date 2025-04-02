@@ -25,16 +25,22 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export default function Component({ loaderData }: Route.ComponentProps) {
   const { template, locales, activeLocale } = loaderData;
-  const { view } = useViewStore;
   return (
     <>
       <LocalesBar locales={locales} activeLocale={activeLocale} />
-      <div className="max-w-fit rounded-xl overflow-clip border drop-shadow-lg mx-auto overflow-y-auto">
-        <section
-          className={view === "mobile" ? "max-w-[360px]" : "max-w-[600px]"}
-          dangerouslySetInnerHTML={{ __html: template }}
-        />
-      </div>
+      <TemplateView template={template} />
     </>
+  );
+}
+
+function TemplateView({ template }: { template: string }) {
+  const { view } = useViewStore;
+  return (
+    <div className="max-w-fit rounded-xl overflow-clip border drop-shadow-lg mx-auto overflow-y-auto">
+      <section
+        className={view === "mobile" ? "max-w-[360px]" : "max-w-[600px]"}
+        dangerouslySetInnerHTML={{ __html: template }}
+      />
+    </div>
   );
 }

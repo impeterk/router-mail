@@ -28,7 +28,7 @@ export default function OrderShipped(locale) {
       <mj-body background-color="#F8F8F8">
         <mj-wrapper background-color={config.backgroundColor}>
           <Header />
-          <Stage title={config.locales[locale].header.title}>
+          <Stage title={config.locales[locale]?.header.title}>
             <>
               <mj-text>
                 <p>Dear {`{{Name Surname}}`}</p>
