@@ -12,4 +12,5 @@ export default [
     route("/docs", "routes/docs/page.tsx"),
   ]),
   route("/actions/export-all", "routes/actions/export-all.ts"),
+  route("/actions/export-localized", "routes/actions/export-localized.ts"),
 ] satisfies RouteConfig;

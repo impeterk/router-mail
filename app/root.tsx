@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { RouterTopLoader } from "remix-toploader";
+import RouterTopLoader from "rr-toploader";
 import type { Route } from "./+types/root";
 import "./app.css";
 import { ThemeProvider } from "./components/theme-provider";
@@ -33,7 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <RouterTopLoader />
         <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
           {children}

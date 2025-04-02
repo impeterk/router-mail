@@ -16,7 +16,7 @@ export default function Layout({ loaderData }: { loaderData: Node }) {
       <AppSidebar nodes={nodes} />
       <SidebarInset className="bg-sidebar-foreground/10 dark:bg-background grid grid-rows-[auto_1fr] relative">
         <Header />
-        <section className="container w-full mx-auto max-w-7xl px-8 py-4">
+        <section className="container w-full mx-auto max-w-7xl px-8 py-4 relative">
           <Outlet />
         </section>
       </SidebarInset>

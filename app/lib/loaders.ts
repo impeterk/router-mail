@@ -1,4 +1,4 @@
-import config from "@@/app.config.json";
+import appConfig from "@@/app.config.json";
 import { createTree } from "./utils";
 import { renderJsxTemplate } from "./renders";
 
@@ -9,7 +9,7 @@ export function loadAllTemplates() {
   const matches = import.meta.glob(["/**/*.(jsx|mjml)"], {});
   const templatesForTree = Object.keys(matches)
     // @ts-ignore
-    .filter((match) => match.startsWith(`/${config.input}`))
+    .filter((match) => match.startsWith(`/${appConfig.input}`))
     .filter((match) => !match.includes("/_"));
 
   const templatesTree = createTree(templatesForTree);
@@ -28,4 +28,18 @@ export async function loadTemplate(path: string, ext = "jsx", locale = "") {
     template = await renderJsxTemplate(file?.default(locale));
   }
   return { locales, config, template, activeLocale: locale };
+}
+
+export async function loadLocalizedTemplates(
+  templatePath: string,
+  ext = "jsx",
+  locales: string[]
+) {
+  const templates = [];
+
+  for (const locale of locales) {
+    const { template } = await loadTemplate(templatePath, ext, locale);
+    templates.push({ locale, template });
+  }
+  return templates;
 }

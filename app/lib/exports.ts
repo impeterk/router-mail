@@ -1,19 +1,28 @@
 import path from "path";
 import fs from "fs/promises";
-import config from "@@/app.config.json";
+import appConfig from "@@/app.config.json";
 import { renderJsxTemplate } from "./renders";
 
 export async function exportSingleTemplate({
   fileName,
   content,
+  customName = appConfig.templateName ?? "",
+  locale = "",
 }: {
   fileName: string;
   content: string;
+  customName?: string;
+  locale?: string;
 }) {
+  const localeName = `${appConfig.templateName ?? "body"}_${locale}`;
+  let finalName = locale ? localeName : customName;
+
   const filePath = path.join(
     process.cwd(),
-    config.output,
-    fileName.replace(config.input, "")
+    appConfig.output,
+    fileName.replace(appConfig.input, ""),
+    locale,
+    finalName
   );
   const file = `${filePath}.html`;
   const targetDir = path.dirname(file);
@@ -28,6 +37,38 @@ export async function exportSingleTemplate({
     console.log(`${file} write succesfully`);
   } catch (error) {
     console.error("Error writing to file:", error);
+  }
+}
+
+export async function exportLocalizedTemplates({
+  fileName,
+  templates,
+}: {
+  fileName: string;
+  templates: { locale: string; template: string }[];
+}) {
+  try {
+    // templates.forEach(async (entry) => {
+    for (const entry of templates) {
+      const name = `${appConfig.templateName ?? "body"}_${entry.locale}`;
+      await exportSingleTemplate({
+        fileName,
+        content: entry.template,
+        customName: name,
+        locale: entry.locale,
+      });
+    }
+    // });
+    return {
+      success: true,
+      error: false,
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      success: false,
+      error: true,
+    };
   }
 }
 
@@ -46,7 +87,7 @@ export async function exportAllTemplates() {
     // if (match.startsWith(`/${config.input}`) && match.includes("react")) {
     //   react.push({ [match]: matches[match] });
     // }
-    if (match.startsWith(`/${config.input}`)) {
+    if (match.startsWith(`/${appConfig.input}`)) {
       jsx.push({ [match]: matches[match] });
     }
   }
@@ -67,7 +108,7 @@ export async function exportAllTemplates() {
 function handleKeyValue(object: any) {
   return {
     fileName: Object.keys(object)[0]
-      .replace(`/${config.input}`, "")
+      .replace(`/${appConfig.input}`, "")
       .replace(/\.\w+$/, ""),
     file: Object.values(object)[0],
   };
