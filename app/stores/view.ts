@@ -1,4 +1,5 @@
 import { atom } from "nanostores";
+import { useStore } from "@nanostores/react";
 
 export function viewStore() {
   const $view = atom("desktop");
@@ -7,7 +8,13 @@ export function viewStore() {
     $view.set(view);
   }
 
-  return { $view, setView };
+  return {
+    get view() {
+      return useStore($view);
+    },
+    setView,
+    $view,
+  };
 }
 
 export const useViewStore = viewStore();

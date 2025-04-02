@@ -11,10 +11,9 @@ const views: { name: "desktop" | "mobile"; Icon: any }[] = [
 ];
 
 export default function ViewSwitch() {
-  const { $view, setView } = useViewStore;
-  const view = useStore($view);
+  const { view, setView } = useViewStore;
   return (
-    <div className="ml-auto rounded overflow-clip">
+    <div className="rounded overflow-clip">
       {views.map(({ name, Icon }) => (
         <Button
           key={name}
