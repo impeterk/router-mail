@@ -18,6 +18,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     ext,
     locale
   );
+  console.log({ locales });
   exportTemplate({ fileName: path, content: template, locale: activeLocale });
   return { template, locales, config, activeLocale };
 }

@@ -6,27 +6,33 @@ import { z } from "zod";
 const formSchema = z.object({
   filePath: z.string().default(""),
   ext: z.string().default(""),
-  rawLocales: z.string().default(""),
+  locales: z.string().default(""),
 });
 
 export async function action({ request }: Route.ActionArgs) {
   let formData = await request.formData();
-  const { filePath, ext, rawLocales } = formSchema.parse(
-    Object.fromEntries(formData)
-  );
+  const {
+    filePath,
+    ext,
+    locales: rawLocales,
+  } = formSchema.parse(Object.fromEntries(formData));
 
-  if (!filePath || !ext || rawLocales) {
-    console.log({ filePath, ext, rawLocales });
-    return Response.json({ data: false, error: true });
+  console.log({ filePath, ext, rawLocales });
+  if (!filePath || !ext || !rawLocales) {
+    return Response.json({ success: false, error: true });
   }
 
-  const locales = JSON.parse(rawLocales);
-  const templates = await loadLocalizedTemplates(filePath, ext, locales);
-  const { success, error } = await exportLocalizedTemplates({
-    fileName: filePath,
-    templates,
-  });
-
-  // const { data, error } = await exportAllTemplates();
-  return Response.json({ success, error });
+  try {
+    const locales = JSON.parse(rawLocales);
+    console.log({ actionLocales: locales });
+    const templates = await loadLocalizedTemplates(filePath, ext, locales);
+    const { success, error } = await exportLocalizedTemplates({
+      fileName: filePath,
+      templates,
+    });
+    return Response.json({ success, error });
+  } catch (e) {
+    console.log(e);
+    return Response.json({ sucess: false, error: e });
+  }
 }

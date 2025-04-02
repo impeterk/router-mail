@@ -21,14 +21,14 @@ const preview =
 export { config };
 
 // template is default export
-export default function OrderShipped() {
+export default function OrderShipped(locale) {
   return (
     <mjml>
       <Head title={title} preview={preview}></Head>
       <mj-body background-color="#F8F8F8">
         <mj-wrapper background-color={config.backgroundColor}>
           <Header />
-          <Stage title="Your order is on its way">
+          <Stage title={config.locales[locale].header.title}>
             <>
               <mj-text>
                 <p>Dear {`{{Name Surname}}`}</p>
@@ -42,7 +42,7 @@ export default function OrderShipped() {
                 color={config.stage.btn.color}
                 href="{{link}}"
               >
-                {config["en_US"].buttons.stage}
+                {config.locales[locale].header.button}
               </Button>
             </>
           </Stage>

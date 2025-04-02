@@ -2,6 +2,8 @@
 // this config could be expanded further with general values
 // you can also extend it for each folder / file with specific values
 
+import en_US from "./_i18n/en_US.json";
+import it_IT from "./_i18n/it_IT.json";
 export default {
   backgroundColor: "#ffffff",
   color: "#000000",
@@ -47,8 +49,8 @@ export default {
     },
   },
   i18n: true,
-  locales: ["en_US", "en_GB", "it_IT"],
-  en_US: {
-    buttons: { stage: "Track Your Order" },
+  locales: {
+    en_US,
+    it_IT,
   },
 };

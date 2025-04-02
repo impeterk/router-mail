@@ -54,16 +54,12 @@ const ExportLocalesButton = ({
   let fetcher = useFetcher();
   const { pathname } = useLocation();
   let busy = fetcher.state !== "idle";
-  console.log({ locales });
+  console.log({ btnlocales: JSON.stringify(locales) });
   return (
     <fetcher.Form method="post" action="/actions/export-localized">
       <input hidden defaultValue={pathname.slice(1)} name="filePath" />
       <input hidden defaultValue={ext} name="ext" />
-      <input
-        hidden
-        defaultValue={JSON.stringify(locales, null, 2)}
-        name="locales"
-      />
+      <input hidden defaultValue={JSON.stringify(locales)} name="locales" />
       <Button disabled={busy} size={"lg"}>
         <Languages className="size-6" />
         Export all Locales
