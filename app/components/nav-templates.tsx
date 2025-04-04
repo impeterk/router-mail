@@ -3,12 +3,12 @@ import {
   ChevronRight,
   EllipsisVertical,
   File,
-  Folder,
   FolderClosed,
   FolderOpen,
 } from "lucide-react";
 import {
   SidebarGroup,
+  SidebarGroupAction,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
@@ -23,7 +23,6 @@ import {
 } from "./ui/collapsible";
 import type { Node } from "@/lib/types";
 import { useState } from "react";
-import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -57,11 +56,11 @@ function TemplatesActions() {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"} size="icon" className="ml-auto">
+        <SidebarGroupAction>
           <EllipsisVertical />
-        </Button>
+        </SidebarGroupAction>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent side="right" align="start">
         <DropdownMenuLabel>Options</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => setOpen(false)}>

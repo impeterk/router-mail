@@ -43,7 +43,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { theme } = useLoaderData();
-  console.log({ theme });
   return (
     <html lang="en" className={theme} suppressHydrationWarning>
       <head>

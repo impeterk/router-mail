@@ -33,7 +33,6 @@ export function ThemeProvider({
     if (!isBrowser) return "system";
     return (localStorage.getItem("ui-theme") as Theme) || defaultTheme;
   });
-  console.log({ defaultTheme });
 
   useLayoutEffect(() => {
     const root = document.documentElement;

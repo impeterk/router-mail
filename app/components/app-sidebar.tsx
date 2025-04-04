@@ -16,10 +16,9 @@ import {
 import { Link } from "react-router";
 import { NavFooter } from "./nav-footer";
 import type { Node } from "@/lib/types";
-import { Button } from "./ui/button";
-import ExportAllTemplates from "./export-all";
 import { useTemplatesStore } from "@/stores/template";
 import SendsingleTemplate from "./send-single-template";
+import Settings from "./settings";
 
 export function AppSidebar({
   nodes,
@@ -44,6 +43,8 @@ export function AppSidebar({
       <SidebarFooter>
         <SendsingleTemplate />
         <NavFooter />
+        <SidebarSeparator />
+        <Settings />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
