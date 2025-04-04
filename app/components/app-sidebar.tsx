@@ -18,11 +18,14 @@ import { NavFooter } from "./nav-footer";
 import type { Node } from "@/lib/types";
 import { Button } from "./ui/button";
 import ExportAllTemplates from "./export-all";
+import { useTemplatesStore } from "@/stores/template";
+import SendsingleTemplate from "./send-single-template";
 
 export function AppSidebar({
   nodes,
   ...props
 }: React.ComponentProps<typeof Sidebar> & { nodes: Node }) {
+  const { currTempl } = useTemplatesStore;
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -39,7 +42,7 @@ export function AppSidebar({
         </SidebarGroupContent>
       </SidebarContent>
       <SidebarFooter>
-        <ExportAllTemplates />
+        <SendsingleTemplate />
         <NavFooter />
       </SidebarFooter>
       <SidebarRail />

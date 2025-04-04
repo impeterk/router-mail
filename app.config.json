@@ -1,5 +1,7 @@
 {
-    "input": "templates/",
-    "output": "emails/",
-    "templateName": "body"
+  "input": "templates/",
+  "output": "emails/",
+  "templateName": "body",
+  "email": ""
 }
+

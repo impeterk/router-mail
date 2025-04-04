@@ -1,6 +1,7 @@
 "use client";
 import {
   ChevronRight,
+  EllipsisVertical,
   File,
   Folder,
   FolderClosed,
@@ -22,12 +23,25 @@ import {
 } from "./ui/collapsible";
 import type { Node } from "@/lib/types";
 import { useState } from "react";
+import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+} from "./ui/dropdown-menu";
+import ExportAllTemplates from "./export-all";
 
 export function NavTemplates({ templates }: { templates: Node }) {
   const { pathname } = useLocation();
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Templates</SidebarGroupLabel>
+      <SidebarGroupLabel>
+        Templates
+        <TemplatesActions />
+      </SidebarGroupLabel>
       <SidebarMenu>
         {templates.nodes &&
           templates.nodes.map((item, index) => (
@@ -35,6 +49,26 @@ export function NavTemplates({ templates }: { templates: Node }) {
           ))}
       </SidebarMenu>
     </SidebarGroup>
+  );
+}
+
+function TemplatesActions() {
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant={"ghost"} size="icon" className="ml-auto">
+          <EllipsisVertical />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>Options</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => setOpen(false)}>
+          <ExportAllTemplates />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

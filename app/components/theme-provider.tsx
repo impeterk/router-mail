@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
 
-type Theme = "dark" | "light" | "system";
+export type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -20,23 +20,25 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
+const isBrowser = typeof window !== "undefined";
+
 export function ThemeProvider({
   children,
   defaultTheme = "system",
   storageKey = "ui-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => defaultTheme);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (!isBrowser) return "system";
+    return (localStorage.getItem("ui-theme") as Theme) || defaultTheme;
+  });
 
-  useEffect(() => {
-    if (localStorage.getItem(storageKey))
-      setTheme(() => localStorage.getItem(storageKey) as Theme);
-  }, []);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (!isBrowser) return;
     const root = window.document.documentElement;
 
     root.classList.remove("light", "dark");
+    let tmp = theme;
 
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
@@ -44,11 +46,10 @@ export function ThemeProvider({
         ? "dark"
         : "light";
 
-      root.classList.add(systemTheme);
-      return;
+      tmp = systemTheme;
     }
 
-    root.classList.add(theme);
+    root.classList.add(tmp);
   }, [theme]);
 
   const value = {

@@ -7,21 +7,20 @@ export default function ExportAllTemplates() {
   let fetcher = useFetcher();
   let busy = fetcher.state !== "idle";
   return (
-    <SidebarMenu>
-      <fetcher.Form
-        method="GET"
-        action="/actions/export-all"
-        className="flex justify-center"
+    <fetcher.Form
+      method="GET"
+      action="/actions/export-all"
+      className="flex justify-center"
+    >
+      <Button
+        variant={"ghost"}
+        className="font-semibold"
+        size={"lg"}
+        disabled={busy}
       >
-        <Button
-          className="rounded-[0.5rem] font-semibold"
-          size={"lg"}
-          disabled={busy}
-        >
-          <Files />
-          Export all templates
-        </Button>
-      </fetcher.Form>
-    </SidebarMenu>
+        <Files />
+        Export all templates
+      </Button>
+    </fetcher.Form>
   );
 }

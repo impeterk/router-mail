@@ -42,7 +42,7 @@ export default function OrderShipped(locale) {
                 color={config.stage.btn.color}
                 href="{{link}}"
               >
-                {config.locales[locale].header.button}
+                {config.locales[locale]?.header.button}
               </Button>
             </>
           </Stage>

@@ -35,6 +35,7 @@ export async function exportSingleTemplate({
   try {
     await fs.writeFile(file, content);
     console.log(`${file} write succesfully`);
+    return file;
   } catch (error) {
     console.error("Error writing to file:", error);
   }

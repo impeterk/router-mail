@@ -35,9 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body suppressHydrationWarning>
         <RouterTopLoader />
-        <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
-          {children}
-        </ThemeProvider>
+        <ThemeProvider storageKey="ui-theme">{children}</ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

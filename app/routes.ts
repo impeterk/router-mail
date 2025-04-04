@@ -13,4 +13,5 @@ export default [
   ]),
   route("/actions/export-all", "routes/actions/export-all.ts"),
   route("/actions/export-localized", "routes/actions/export-localized.ts"),
+  route("/actions/send-template", "routes/actions/send-template.ts"),
 ] satisfies RouteConfig;

@@ -4,7 +4,7 @@ import { useViewStore } from "@/stores/view";
 import { loadTemplate } from "@/lib/loaders";
 import type { Route } from "./+types/page";
 import LocalesBar from "./locales-bar";
-import { Button } from "@/components/ui/button";
+import { useTemplatesStore } from "@/stores/template";
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const ext = url.searchParams.get("ext");
@@ -19,12 +19,19 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     locale
   );
   console.log({ locales });
-  exportTemplate({ fileName: path, content: template, locale: activeLocale });
-  return { template, locales, config, activeLocale };
+  const exportPath = exportTemplate({
+    fileName: path,
+    content: template,
+    locale: activeLocale,
+  });
+  return { template, locales, config, activeLocale, exportPath };
 }
 
 export default function Component({ loaderData }: Route.ComponentProps) {
-  const { template, locales, activeLocale } = loaderData;
+  const { setCurrTempl } = useTemplatesStore;
+  const { template, locales, activeLocale, exportPath } = loaderData;
+
+  setCurrTempl(exportPath);
   return (
     <>
       <LocalesBar locales={locales} activeLocale={activeLocale} />
