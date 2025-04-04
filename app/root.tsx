@@ -5,6 +5,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
+  type LoaderFunctionArgs,
 } from "react-router";
 import RouterTopLoader from "rr-toploader";
 import type { Route } from "./+types/root";
@@ -24,9 +26,26 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  const cookies = request.headers.get("Cookie");
+  let theme = "system";
+  if (!cookies) {
+    return { theme };
+  }
+  cookies.split("; ").forEach((cookie) => {
+    let [key, value] = cookie.split("=");
+    if (key === "ui-theme") theme = value;
+  });
+  return {
+    theme,
+  };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { theme } = useLoaderData();
+  console.log({ theme });
   return (
-    <html lang="en" className="" suppressHydrationWarning>
+    <html lang="en" className={theme} suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,7 +54,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body suppressHydrationWarning>
         <RouterTopLoader />
-        <ThemeProvider storageKey="ui-theme">{children}</ThemeProvider>
+
+        <ThemeProvider defaultTheme={theme} storageKey="ui-theme">
+          {children}
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

@@ -6,6 +6,7 @@ type ThemeProviderProps = {
   children: React.ReactNode;
   defaultTheme?: Theme;
   storageKey?: string;
+  serverTheme?: boolean;
 };
 
 type ThemeProviderState = {
@@ -32,14 +33,14 @@ export function ThemeProvider({
     if (!isBrowser) return "system";
     return (localStorage.getItem("ui-theme") as Theme) || defaultTheme;
   });
+  console.log({ defaultTheme });
 
   useLayoutEffect(() => {
-    if (!isBrowser) return;
-    const root = window.document.documentElement;
+    const root = document.documentElement;
 
-    root.classList.remove("light", "dark");
     let tmp = theme;
-
+    if (theme !== "system" && root.classList.contains(tmp)) return;
+    root.classList.remove("light", "dark");
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
@@ -50,12 +51,19 @@ export function ThemeProvider({
     }
 
     root.classList.add(tmp);
+    document.cookie = `${storageKey}=${tmp};max-age=${
+      1000 * 60 * 60 * 24 * 365
+    };path=/`;
   }, [theme]);
 
   const value = {
     theme,
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme);
+      document.documentElement.classList;
+      document.cookie = `${storageKey}=${theme};max-age=${
+        60 * 60 * 24 * 365
+      };path=/`;
       setTheme(theme);
     },
   };
