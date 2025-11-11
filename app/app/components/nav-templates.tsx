@@ -71,8 +71,6 @@ function TemplatesActions() {
   );
 }
 
-const activeClass =
-  "bg-sidebar-border hover:bg-sidebar-border text-sidebar-accent-foreground font-semibold";
 function Tree({ node, activeLink }: { node: Node; activeLink: string }) {
   const [isOpen, setIsOpen] = useState(
     activeLink.includes(node.name) || node?.level! < 1
@@ -82,7 +80,7 @@ function Tree({ node, activeLink }: { node: Node; activeLink: string }) {
     return (
       <NavLink to={node.link!}>
         {({ isActive }) => (
-          <SidebarMenuButton className={isActive ? activeClass : ""}>
+          <SidebarMenuButton isActive={isActive}>
             <File />
             {node.name}
           </SidebarMenuButton>

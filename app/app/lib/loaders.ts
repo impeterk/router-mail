@@ -7,18 +7,23 @@ import fs from "fs/promises";
 // TODO: add correct types
 // TODO: remove @ts-ignore
 export function loadAllTemplates() {
-  const matches = import.meta.glob(["/**/*.(jsx|mjml)"], {});
+  const matches = import.meta.glob([`../../../**/*.(jsx|mjml)`], {});
+
   const templatesForTree = Object.keys(matches)
     // @ts-ignore
-    .filter((match) => match.startsWith(`/${appConfig.input}`))
-    .filter((match) => !match.includes("/_"));
+    .filter((match) => match.startsWith(`../../../${appConfig.input}`))
+    .filter((match) => !match.includes("/_"))
+    .map((match) => match.replace("../../..", ""));
 
   const templatesTree = createTree(templatesForTree);
   return templatesTree;
 }
 
 export async function loadTemplate(path: string, ext = "jsx", locale = "") {
-  const file = await import(/*@vite-ignore*/ `/${path}.${ext}`);
+  console.log({ path, cwd: process.cwd() });
+  const file = await import(
+    /*@vite-ignore*/ `${process.cwd().replace("/app", "")}/${path}.${ext}`
+  );
   const { config } = file;
   let locales: string[] = Object.keys(config?.locales ?? []);
   console.log({ fn: locales });

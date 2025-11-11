@@ -2,5 +2,6 @@
   "input": "templates/",
   "output": "emails/",
   "templateName": "body",
-  "email": "peter.kudelas@henkel.com"
+  "email": ""
 }
+

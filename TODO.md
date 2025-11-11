@@ -2,11 +2,11 @@
 
 - [ ] add monaco editor to edit templates directly in the browser
 - [ ] add view for sending and exporting templates
-- [ ] add toaster (sonner) for notifications
+- [x] add toaster (sonner) for notifications
   - e.g. email sent, templates exported, templates zipped
-- [ ] add setting page
+- [x] add setting page
   - this will edit the app.config.json file directly
-- [ ] button to add new template/file with dialog
+- [ ] button to add new template/file with dialog // maybe not
 - [ ] display components and other \_/\_\_ folders
   - this is related to monaco editor being added as well
 

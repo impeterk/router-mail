@@ -73,7 +73,7 @@ function FooterLinks({
   return (
     <mj-section padding-top="20px" text-align="left">
       {socials && (
-        <mj-column width="15%" vertical-align="center">
+        <mj-column width="20%" vertical-align="center">
           <mj-text color={footerConfig.color} font-size="14px">
             Follow us:
           </mj-text>

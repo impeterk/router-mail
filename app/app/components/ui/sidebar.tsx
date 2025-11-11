@@ -555,13 +555,19 @@ const SidebarMenuButton = React.forwardRef<
     const Comp = asChild ? Slot : "button";
     const { isMobile, state } = useSidebar();
 
+    const activeClass =
+      "bg-sidebar-border hover:bg-sidebar-border text-sidebar-accent-foreground font-semibold";
     const button = (
       <Comp
         ref={ref}
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        className={cn(
+          sidebarMenuButtonVariants({ variant, size }),
+          isActive && activeClass,
+          className
+        )}
         {...props}
       />
     );

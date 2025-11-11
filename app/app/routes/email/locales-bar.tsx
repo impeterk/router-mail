@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { cn } from "@/lib/utils";
 import { Languages } from "lucide-react";
 import { useFetcher, useLocation, useSearchParams } from "react-router";
@@ -17,27 +18,24 @@ export default function LocalesBar({
   }
 
   return (
-    <div className="sticky top-16 z-[100] flex items-center mb-4 gap-2">
+    <div className="sticky top-16 z-[10] flex items-center mb-4 gap-2">
       <div className="w-full rounded-md drop-shadow-lg bg-background">
-        {locales.map((locale, idx) => (
-          <Button
-            key={locale}
-            onClick={() => {
-              setSearchParams((prev) => {
-                prev.set("locale", locale);
-                return prev;
-              });
-            }}
-            variant={activeLocale == locale ? "default" : "secondary"}
-            className={cn(
-              "rounded-none h-10",
-              idx == 0 && "rounded-l-md",
-              idx === locales.length - 1 && "rounded-r-md"
-            )}
-          >
-            {locale}
-          </Button>
-        ))}
+        <ButtonGroup>
+          {locales.map((locale) => (
+            <Button
+              key={locale}
+              onClick={() => {
+                setSearchParams((prev) => {
+                  prev.set("locale", locale);
+                  return prev;
+                });
+              }}
+              variant={activeLocale == locale ? "default" : "secondary"}
+            >
+              {locale}
+            </Button>
+          ))}
+        </ButtonGroup>
       </div>
       <ExportLocalesButton locales={locales} ext={ext} />
     </div>

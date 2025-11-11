@@ -6,7 +6,7 @@ import ViewSwitch from "./view-switch";
 import { useTheme } from "./theme-provider";
 export function Header() {
   return (
-    <header className="flex items-center gap-2 transition-[width,height] ease-linear border-b bg-sidebar h-16 sticky top-0 left-0 z-[100]">
+    <header className="flex items-center gap-2 transition-[width,height] ease-linear border-b bg-sidebar h-16 sticky top-0 left-0 z-[10]">
       <div className="flex items-center gap-2 px-8 w-full">
         <SidebarTrigger />
         <Separator orientation="vertical" className="mr-2 h-4" />

@@ -48,7 +48,7 @@ export default {
       size: "24px",
     },
   },
-  i18n: true,
+  i18n: true, // to display multiple languages in the locales bar
   locales: {
     en_US,
     it_IT,
