@@ -9,7 +9,7 @@ import { CheckCircle2Icon, XCircleIcon } from "lucide-react";
 
 export function SuccessMessage() {
   return (
-    <Item variant="outline" className="bg-green-50" size="sm">
+    <Item variant="outline" className="bg-green-50 dark:bg-green-800" size="sm">
       <ItemMedia>
         <CheckCircle2Icon className="size-5" />
       </ItemMedia>
@@ -22,7 +22,7 @@ export function SuccessMessage() {
 
 export function ErrorMessage() {
   return (
-    <Item variant="outline" className="bg-red-50" size="sm">
+    <Item variant="outline" className="bg-red-50 dark:bg-destructive" size="sm">
       <ItemMedia>
         <XCircleIcon className="size-5" />
       </ItemMedia>
