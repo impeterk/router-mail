@@ -3,6 +3,7 @@
   "private": true,
   "workspaces": [],
   "scripts": {
+    "start": "npm run start --prefix app",
     "dev": "npm run dev --prefix app",
     "install": "npm install --prefix app"
   }
